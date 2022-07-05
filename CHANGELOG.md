@@ -1,9 +1,8 @@
 # Change Log
 
-All notable changes to the "regexp-tools" extension will be documented in this file.
+## [0.0.1] - 2022-07-06
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
-
-## [Unreleased]
+### Added
 
 - Initial release
+- support go to reg101 hover tip
