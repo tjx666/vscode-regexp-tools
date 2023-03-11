@@ -1,6 +1,6 @@
 {
     "name": "regexp-tools",
-    "displayName": "regexp-tools",
+    "displayName": "Regexp Tools",
     "description": "some useful tools about regexp",
     "version": "0.0.1",
     "publisher": "YuTengjing",
@@ -29,7 +29,14 @@
         "onLanguage:vue"
     ],
     "main": "./out/extension.js",
-    "contributes": {},
+    "contributes": {
+        "commands": [
+            {
+                "title": "Generate Regexp from Selections and Copy",
+                "command": "regexp-tools.generateRegexpFromSelections"
+            }
+        ]
+    },
     "eslintConfig": {
         "extends": "@yutengjing/eslint-config-typescript"
     },
