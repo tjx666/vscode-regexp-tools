@@ -1,23 +1,23 @@
-import {
+import type {
     CancellationToken,
-    Hover,
     HoverProvider,
-    MarkdownString,
     Position,
     ProviderResult,
     TextDocument,
 } from 'vscode';
+import { Hover, MarkdownString } from 'vscode';
 
 export default class RegexpHoverProvider implements HoverProvider {
     provideHover(
         document: TextDocument,
         position: Position,
-        token: CancellationToken,
+        _token: CancellationToken,
     ): ProviderResult<Hover> {
         const currentLine = document.lineAt(position.line);
         const currentLineText = currentLine.text.slice(0, 1000);
         // https://github.com/chrmarti/vscode-regex/blob/41062efe8aa5113e8902742ae270e090a3de5c5e/src/extension.ts#L14
         const jsRegexpRegexp =
+            // eslint-disable-next-line security/detect-unsafe-regex, regexp/prefer-character-class, regexp/no-super-linear-backtracking, unicorn/better-regex
             /(^|\s|[()={},:?;])(\/((?:\\\/|\[[^\]]*\]|[^/])+)\/([gmdsuyi]*))(\s|[()={},:?;]|$)/g;
         const matchArray = currentLineText.matchAll(jsRegexpRegexp);
 
