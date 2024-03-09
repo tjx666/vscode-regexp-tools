@@ -1,5 +1,15 @@
 # Change Log
 
+## [0.2.0] - 2024-03-09
+
+### Added
+
+- feat: support `astro` and `svelte`
+
+### Changed
+
+- perf: use `regexp.exec` instead `string.matchAll` to find regexp
+
 ## [0.1.0] - 2024-03-09
 
 ### Added

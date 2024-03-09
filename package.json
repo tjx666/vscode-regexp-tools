@@ -2,7 +2,7 @@
     "name": "regexp-tools",
     "displayName": "Regexp Tools",
     "description": "some useful tools about regexp",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "publisher": "YuTengjing",
     "icon": "assets/logo.png",
     "engines": {

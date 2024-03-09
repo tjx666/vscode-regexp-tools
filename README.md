@@ -6,6 +6,8 @@ some useful tools about regexp
 
 ### Hover Tip
 
+> only support js/jsx/ts/tsx/vue/svelte/astro language.
+
 Support go to [reg101](https://regex101.com/), for following js regexp:
 
 ```typescript
@@ -20,7 +22,7 @@ Will generate url:
 
 ### Escape String to RegExp
 
-Just select a text and run command `Escape String to RegExp`, for example will transform:
+Just select some text and run command `Escape String to RegExp`, for example will transform:
 
 ```javascript
 const s = '^adjalks{}[]sadasd/';
