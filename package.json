@@ -38,7 +38,10 @@
         ]
     },
     "eslintConfig": {
-        "extends": "@yutengjing/eslint-config-typescript"
+        "extends": "@yutengjing/eslint-config-typescript",
+        "ignorePatterns": [
+            "test-workspace/"
+        ]
     },
     "prettier": "@yutengjing/prettier-config",
     "scripts": {

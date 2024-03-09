@@ -18,22 +18,18 @@ export default class RegexpHoverProvider implements HoverProvider {
         // https://github.com/chrmarti/vscode-regex/blob/41062efe8aa5113e8902742ae270e090a3de5c5e/src/extension.ts#L14
         const jsRegexpRegexp =
             // eslint-disable-next-line regexp/prefer-character-class, regexp/no-super-linear-backtracking
-            /(^|\s|[()={},:?;])(\/((?:\\\/|\[[^\]]*\]|[^/])+)\/([gmdsuyi]*))(\s|[()={},:?;]|$)/g;
-        const matchArray = currentLineText.matchAll(jsRegexpRegexp);
-
+            /(^|\s|[()={},:?;])(\/((?:\\\/|\[[^\]]*\]|[^/])+)\/([gmdsuyi]*))(?:\s|[()={},:?;]|$)/g;
         let hoverRegexpString: string | undefined;
         let flags: string | undefined;
-        for (const match of matchArray) {
-            if (match.index === undefined) {
-                continue;
-            }
-
+        let match: RegExpExecArray | null;
+        // eslint-disable-next-line no-cond-assign
+        while ((match = jsRegexpRegexp.exec(currentLineText))) {
             const start = match.index + match[1].length;
-            const end = Math.max(start, start + match[2].length - 1);
+            const end = Math.max(start, start + match[2].length);
 
             const regexpString = currentLineText.slice(start, end);
             const isMultilineComment = regexpString.startsWith('/*') && regexpString.endsWith('*/');
-            if (!isMultilineComment && position.character >= start && position.character <= end) {
+            if (!isMultilineComment && position.character >= start && position.character < end) {
                 hoverRegexpString = match[3];
                 flags = match[4];
                 break;
