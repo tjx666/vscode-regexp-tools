@@ -12,12 +12,12 @@ export default class RegexpHoverProvider implements HoverProvider {
         document: TextDocument,
         position: Position,
         _token: CancellationToken,
-    ): ProviderResult<Hover> {
+    ): ProviderResult<Hover> | undefined {
         const currentLine = document.lineAt(position.line);
         const currentLineText = currentLine.text.slice(0, 1000);
         // https://github.com/chrmarti/vscode-regex/blob/41062efe8aa5113e8902742ae270e090a3de5c5e/src/extension.ts#L14
         const jsRegexpRegexp =
-            // eslint-disable-next-line security/detect-unsafe-regex, regexp/prefer-character-class, regexp/no-super-linear-backtracking, unicorn/better-regex
+            // eslint-disable-next-line regexp/prefer-character-class, regexp/no-super-linear-backtracking
             /(^|\s|[()={},:?;])(\/((?:\\\/|\[[^\]]*\]|[^/])+)\/([gmdsuyi]*))(\s|[()={},:?;]|$)/g;
         const matchArray = currentLineText.matchAll(jsRegexpRegexp);
 
@@ -31,7 +31,9 @@ export default class RegexpHoverProvider implements HoverProvider {
             const start = match.index + match[1].length;
             const end = Math.max(start, start + match[2].length - 1);
 
-            if (position.character >= start && position.character <= end) {
+            const regexpString = currentLineText.slice(start, end);
+            const isMultilineComment = regexpString.startsWith('/*') && regexpString.endsWith('*/');
+            if (!isMultilineComment && position.character >= start && position.character <= end) {
                 hoverRegexpString = match[3];
                 flags = match[4];
                 break;
@@ -63,5 +65,6 @@ https://github.com/chrmarti/vscode-regex`);
             const hover = new Hover(contents);
             return hover;
         }
+        return undefined;
     }
 }

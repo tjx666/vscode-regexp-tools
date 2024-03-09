@@ -6,7 +6,7 @@
     "publisher": "YuTengjing",
     "icon": "assets/logo.png",
     "engines": {
-        "vscode": "^1.76.0"
+        "vscode": "^1.85.0"
     },
     "repository": {
         "type": "git",
@@ -28,12 +28,12 @@
         "onLanguage:typescriptreact",
         "onLanguage:vue"
     ],
-    "main": "./out/extension.js",
+    "main": "./out/src/extension.js",
     "contributes": {
         "commands": [
             {
-                "title": "Generate Regexp from Selections and Copy",
-                "command": "regexp-tools.generateRegexpFromSelections"
+                "title": "Escape String to RegExp",
+                "command": "regexp-tools.escapeStringToRegexp"
             }
         ]
     },
@@ -42,20 +42,29 @@
     },
     "prettier": "@yutengjing/prettier-config",
     "scripts": {
-        "vscode:prepublish": "npm run compile",
-        "compile": "tsc -p ./",
-        "watch": "tsc -watch -p ./",
+        "postinstall": "stale-dep -u",
+        "vscode:prepublish": "pnpm esbuild:base --minify",
+        "clean": "rm -rf ./out",
+        "esbuild:base": "stale-dep && tsx scripts/esbuild.ts",
+        "esbuild:watch": "pnpm esbuild:base --sourcemap --watch",
+        "esbuild:analyze": "pnpm esbuild:base --minify --metafile --analyze && esbuild-visualizer --metadata ./meta.json --open",
         "lint": "eslint src --ext ts",
         "package": "vsce package --no-dependencies",
         "release": "vsce publish --no-dependencies"
     },
     "devDependencies": {
-        "@types/vscode": "^1.76.0",
-        "@types/node": "^18.15.0",
-        "@yutengjing/eslint-config-typescript": "^0.2.5",
-        "@yutengjing/prettier-config": "^0.0.1",
-        "@vscode/vsce": "^2.18.0",
-        "eslint": "^8.36.0",
-        "typescript": "5.0.1-rc"
+        "@types/node": "^18.19.22",
+        "@types/vscode": "^1.85.0",
+        "@vscode/vsce": "^2.24.0",
+        "@yutengjing/eslint-config-typescript": "^0.5.2",
+        "@yutengjing/prettier-config": "^1.1.2",
+        "esbuild": "^0.20.1",
+        "esbuild-visualizer": "^0.6.0",
+        "eslint": "^8.57.0",
+        "stale-dep": "^0.7.0",
+        "typescript": "5.4.2"
+    },
+    "dependencies": {
+        "escape-string-regexp": "^5.0.0"
     }
 }

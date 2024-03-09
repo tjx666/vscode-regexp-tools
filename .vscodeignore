@@ -2,11 +2,12 @@
 .vscode-test/**
 src/**
 .gitignore
-.yarnrc
 vsc-extension-quickstart.md
-**/tsconfig.json
+**/tsconfig.*json
 **/.eslintrc.json
 **/*.map
 **/*.ts
 
 assets/screenshots
+test-workspace
+pnpm-lock.yaml
