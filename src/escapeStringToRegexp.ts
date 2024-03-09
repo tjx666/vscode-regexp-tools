@@ -6,7 +6,7 @@ export async function escapeStringToRegexp(editor: TextEditor): Promise<boolean>
         const { document, selections } = editor;
         for (const selection of selections) {
             const word = document.getText(selection);
-            const pluralizedWord = escapeStringRegexp(word);
+            const pluralizedWord = escapeStringRegexp(word).replaceAll('/', '\\/');
             editorBuilder.replace(selection, pluralizedWord);
         }
     });
